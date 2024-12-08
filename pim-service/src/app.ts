@@ -1,33 +1,29 @@
 import * as dotenv from 'dotenv';
+import './lib/env';
 dotenv.config();
 
 import express, { Express } from 'express';
 import bodyParser from 'body-parser';
 
-// Import routes
-import ServiceRoutes from './routes/service.route';
+import { router } from './routes';
 
-import { readConfiguration } from './utils/config.utils';
-import { errorMiddleware } from './middleware/error.middleware';
+import { basicAuthMiddleware } from './middleware/basic-auth';
+import { errorMiddleware } from './middleware/error';
+import { HttpError } from './model/error';
 
-// Read env variables
-readConfiguration();
-
-// Create the express app
 const app: Express = express();
 app.disable('x-powered-by');
 
 // Define configurations
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(basicAuthMiddleware);
 
-// Define routes
-app.use('/service', ServiceRoutes);
+app.use('/service', router);
 app.use('*', () => {
-	throw new Error('Route not found');
+  throw new HttpError(404, 'Route not found');
 });
 
-// Global error handler
 app.use(errorMiddleware);
 
 export default app;

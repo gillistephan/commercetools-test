@@ -2,7 +2,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 // Import logger
-import { logger } from './utils/logger.utils';
+import { logger } from './lib/logger';
 
 import app from './app';
 

@@ -1,5 +1,5 @@
 deployAs:
-  - name: coloyal-test-service
+  - name: pim-service
     applicationType: service
     endpoint: /service
     scripts:
@@ -11,6 +11,10 @@ deployAs:
           description: commercetools Composable Commerce API region
           required: true
           default: "europe-west1.gcp"
+        - key: BASIC_AUTH_USERNAME
+          description: Basic authentication username
+          required: true
+          default: coloyal
       securedConfiguration:
         - key: CTP_PROJECT_KEY
           description: commercetools Composable Commerce project key
@@ -23,4 +27,7 @@ deployAs:
           required: true
         - key: CTP_SCOPE
           description: commercetools Composable Commerce client scope
+          required: true
+        - key: BASIC_AUTH_PASSWORD
+          description: Basic authentication password
           required: true
